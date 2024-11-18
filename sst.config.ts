@@ -3,17 +3,15 @@
 export default $config({
   app(input) {
     return {
-      name: "monorepo-template",
+      name: "users-dynamodb",
       removal: input?.stage === "production" ? "retain" : "remove",
       home: "aws",
     };
   },
   async run() {
-    await import("./infra/storage");
-    const api = await import("./infra/api");
-
+    const storage = await import("./infra/storage");
     return {
-      api: api.myApi.url,
+      arn: storage.table.arn,
     };
   },
 });
